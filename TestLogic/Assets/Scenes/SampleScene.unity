@@ -418,7 +418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c6c7efdd618b134e94bb2f7ca9190be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootParticle: {fileID: 19800000, guid: 979632a27455af442bd2d8f36eb0ffce, type: 3}
+  shootParticle: {fileID: 198602994958770764, guid: ec1383a81f8b26e41bd5795fba065567, type: 3}
   playerGun: {fileID: 556495742}
 --- !u!1 &705507993
 GameObject:

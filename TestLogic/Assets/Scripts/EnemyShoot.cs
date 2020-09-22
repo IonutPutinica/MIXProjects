@@ -5,40 +5,37 @@ using UnityEngine;
 
 public class EnemyShoot : MonoBehaviour
 {
+    private EnemyMovement movement;
+
     public float damage = 10.0f;
     public float range = 100.0f;
     RaycastHit hit;
 
-    private void FixedUpdate() //Raycast works with Unity physics and its best to keep physics in fixed update.
+    private void Start()
     {
-        if (Physics.Raycast(transform.position, transform.forward * -1, out hit, range))
-        {
-            //Debug.Log(hit.transform.name);
-            //Debug.Log("The ENEMY shot the PLAYER!");
-            if (hit.transform.name == "PlayerCube")
-            {
-                Debug.Log("DIE!");
-                //StartCoroutine(OpenFire());
-                //The method below may get moved to the coroutine.
-                PlayerHealth player = hit.transform.GetComponent<PlayerHealth>();
-                if (player != null)
-                {
-                    player.TakeDamage(damage);
-                }
-            }
-            else
-            {
-                Debug.Log("SEARCHING!");
-            }
-        }
+        movement = GameObject.FindObjectOfType<EnemyMovement>();
     }
 
-    IEnumerator OpenFire()
+    public bool FoundPlayer()
     {
-        while(hit.collider != null)
+        Debug.DrawRay(transform.position, transform.forward * -50, Color.red);
+        if (!Physics.Raycast(transform.position, transform.forward * -1, out hit, range))
         {
-            //stop rotation from movement script and fire at the player
+            return false;
         }
-        yield return null;
+        return hit.transform.name == "PlayerCube";
     }
+    
+    public IEnumerator Fire()
+    {
+        while(FoundPlayer())
+        { 
+            Debug.Log("Is Called.");
+            yield return new WaitForSeconds(2f);
+        }
+        StartCoroutine(movement.Search());
+        //Problem here.  It restarts the movement rather than continuing where it left off.
+        //Also it should restart the coroutine based on the player remaining in the raycast.
+    }
+
 }

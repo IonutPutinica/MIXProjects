@@ -30,6 +30,7 @@ public class PlayerShoot : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(transform.position, transform.forward, out hit, range))
         {
+            Debug.DrawRay(transform.position, transform.forward * -50, Color.green);
             Debug.Log(hit.transform.name);
             Debug.Log("The PLAYER shot the ENEMY!");
 

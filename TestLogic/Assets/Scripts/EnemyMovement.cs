@@ -5,21 +5,36 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    //private Quaternion fromRotate = Quaternion.Euler(new Vector3(0.0f, 45.0f, 0.0f));
-    //private Quaternion toRotate = Quaternion.Euler(new Vector3(0.0f, -45.0f, 0.0f));
+    private EnemyShoot enemyShoot;
     private float rotateSpeed = 2.0f;
-    private float rotationRange = 60.0f;
+    private float rotationRange = 75.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        enemyShoot = GameObject.FindObjectOfType<EnemyShoot>();
+        StartCoroutine(Search());
     }
 
-    // Update is called once per frame
-    void Update()
+    public IEnumerator Search()
     {
-        //transform.localRotation = Quaternion.Lerp(fromRotate, toRotate, Time.time * rotateSpeed);
-        transform.rotation = Quaternion.Euler(0.0f, rotationRange * Mathf.Sin(Time.time * rotateSpeed), 0.0f);
+        var oscillate = StartCoroutine(Oscillate());
+        while(!enemyShoot.FoundPlayer())
+        {
+            yield return null;
+        }
+        Debug.Log("Player Found by Enemy!");
+        StopCoroutine(oscillate);
+        StartCoroutine(enemyShoot.Fire());
+    }
+
+    private IEnumerator Oscillate()
+    {
+        while(true)
+        {
+            transform.rotation = Quaternion.Euler(0.0f, rotationRange * Mathf.Sin(Time.time * rotateSpeed), 0.0f);
+            Debug.Log("Searching!");
+            yield return null;
+        }
     }
 }
