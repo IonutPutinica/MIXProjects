@@ -32,6 +32,8 @@ public class EnemyShoot : MonoBehaviour
         { 
             Debug.Log("Is Called.");
             yield return new WaitForSeconds(2f);
+            PlayerHealth player = hit.transform.GetComponent<PlayerHealth>();
+            player.TakeDamage(damage);  //Player takes damage regardless of not staying in raycast.
         }
         StartCoroutine(movement.Search());
         //Problem here.  It restarts the movement rather than continuing where it left off.
