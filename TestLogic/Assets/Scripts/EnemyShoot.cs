@@ -28,16 +28,15 @@ public class EnemyShoot : MonoBehaviour
     
     public IEnumerator Fire()
     {
-        while(FoundPlayer())
+        yield return new WaitForSeconds(2f);
+        while (FoundPlayer())
         { 
             Debug.Log("Is Called.");
-            yield return new WaitForSeconds(2f);
             PlayerHealth player = hit.transform.GetComponent<PlayerHealth>();
-            player.TakeDamage(damage);  //Player takes damage regardless of not staying in raycast.
+            player.TakeDamage(damage);  
+            yield return new WaitForSeconds(2f);
         }
         StartCoroutine(movement.Search());
-        //Problem here.  It restarts the movement rather than continuing where it left off.
-        //Also it should restart the coroutine based on the player remaining in the raycast.
     }
 
 }

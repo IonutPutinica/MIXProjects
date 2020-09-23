@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     private EnemyShoot enemyShoot;
-    private float rotateSpeed = 4.0f;  //2.0
+    private float rotateSpeed = 3.0f;  //2.0
     private float rotationRange = 75.0f;
 
     //added for the sake of testing a new movement using deltatime
