@@ -137,12 +137,13 @@ public class lb_Bird : MonoBehaviour {
 		anim.SetBool(landingBoolHash, false);
 
 		//Wait to apply velocity until the bird is entering the flying animation
-		while(anim.GetCurrentAnimatorStateInfo(0).nameHash != flyAnimationHash){
+		while(anim.GetCurrentAnimatorStateInfo(0).fullPathHash != flyAnimationHash){
 			yield return 0;
 		}
 
 		//birds fly up and away from their perch for 1 second before orienting to the next target
-		GetComponent<Rigidbody>().AddForce((transform.forward * 50.0f*controller.birdScale)+(transform.up * 100.0f*controller.birdScale));
+		var temptransform = transform;
+		GetComponent<Rigidbody>().AddForce((temptransform.forward * 50.0f*controller.birdScale)+(temptransform.up * 100.0f*controller.birdScale));
 		float t = 0.0f;
 		while (t<1.0f){
 			if(!paused){
